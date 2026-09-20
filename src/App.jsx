@@ -10,7 +10,7 @@ import Resources from './components/sections/Resources';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<CoursePage />}>
           <Route index element={<Navigate to="landing" replace />} />
