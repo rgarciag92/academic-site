@@ -107,7 +107,7 @@ export const site = {
         id: "tema-1",
         number: 1,
         title: "¿Qué es Aprendizaje Automático?",
-        date: "Viernes 1 de Agosto, 2026",
+        date: "viernes 1 de agosto, 2026",
         objective: "Aprenderás los diferentes tipos de aprendizaje que existen, el proceso de resolución de problemas y la fase de exploración y pre-procesamiento utilizando bibliotecas de Python.",
         material: [
           {
@@ -150,7 +150,7 @@ export const site = {
         id: "tema-2",
         number: 2,
         title: "Conceptos Básicos",
-        date: "Viernes 7 de Agosto, 2026",
+        date: "viernes 7 de agosto, 2026",
         objective: "Aplicar técnicas de limpieza, transformación y análisis exploratorio de datos como paso previo al entrenamiento de modelos.",
         material: [
           {
