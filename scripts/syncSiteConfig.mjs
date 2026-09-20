@@ -9,8 +9,8 @@ import { fileURLToPath } from 'node:url';
 import Papa from 'papaparse';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const TABS = ['General', 'Lists', 'Evaluation', 'Grading', 'Resources', 'Classes'];
-const RICH_GENERAL_KEYS = new Set(['politics.ia']);
+const TABS = ['General', 'Lists', 'Evaluation', 'Classes'];
+const RICH_GENERAL_KEYS = new Set(['politics.ia', 'project.details', 'exam.details', 'grades.details']);
 
 async function loadTab(name, spreadsheetId) {
   let csvText;
@@ -101,18 +101,6 @@ function buildConfig(tabs) {
     evaluation[Number(row.Percent)] = row.Label.trim();
   }
 
-  const grading = tabs.Grading.filter((r) => r.Label).map((r) => ({
-    label: r.Label.trim(),
-    percent: Number(r.Percent),
-    color: r.Color.trim(),
-  }));
-
-  const resources = tabs.Resources.filter((r) => r.Label).map((r) => ({
-    label: r.Label.trim(),
-    href: r.Href.trim(),
-    icon: r.Icon.trim(),
-  }));
-
   const classes = tabs.Classes.filter((r) => r.id).map((r) => {
     const entry = {
       id: r.id.trim(),
@@ -167,8 +155,15 @@ function buildConfig(tabs) {
         ia: get('politics.ia', []),
       },
       classes,
-      grading,
-      resources,
+      project: {
+        details: get('project.details', []),
+      },
+      exam: {
+        details: get('exam.details', []),
+      },
+      grades: {
+        details: get('grades.details', []),
+      },
     },
   };
 }

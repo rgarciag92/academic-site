@@ -176,49 +176,14 @@ export const site = {
         ]
       }
     ],
-    grading: [
-      {
-        label: "Homework",
-        percent: 30,
-        color: "blue.6"
-      },
-      {
-        label: "Midterm",
-        percent: 25,
-        color: "blue.4"
-      },
-      {
-        label: "Final",
-        percent: 25,
-        color: "blue.3"
-      },
-      {
-        label: "Participation",
-        percent: 20,
-        color: "gray.4"
-      }
-    ],
-    resources: [
-      {
-        label: "Syllabus (PDF)",
-        href: "#",
-        icon: "file"
-      },
-      {
-        label: "Lecture slides",
-        href: "#",
-        icon: "slides"
-      },
-      {
-        label: "Textbook and readings",
-        href: "#",
-        icon: "book"
-      },
-      {
-        label: "Discussion forum",
-        href: "#",
-        icon: "forum"
-      }
-    ]
+    project: {
+      details: []
+    },
+    exam: {
+      details: []
+    },
+    grades: {
+      details: []
+    }
   }
 };

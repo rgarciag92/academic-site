@@ -14,8 +14,9 @@ const NAV_ITEMS = [
   { key: 'overview', label: 'Información general', icon: IconLayoutDashboard },
   { key: 'politics', label: 'Políticas del curso', icon: IconCalendarWeek },
   { key: 'clases', label: 'Clases', icon: IconChecklist },
-  { key: 'grading', label: 'Proyecto Final', icon: IconChartBar },
-  { key: 'resources', label: 'Calificaciones', icon: IconFolder },
+  { key: 'project', label: 'Proyecto Final', icon: IconChartBar },
+  { key: 'exam', label: 'Examen Final', icon: IconChartBar },
+  { key: 'grades', label: 'Calificaciones', icon: IconChartBar },
 ];
 
 export default function Sidebar({ onNavigate }) {

@@ -6,9 +6,8 @@ no database.
 
 ## One-time setup (you, the developer)
 
-1. **Create the sheet.** Make a new Google Sheet, then create 6 tabs named
-   exactly: `General`, `Lists`, `Evaluation`, `Grading`, `Resources`,
-   `Classes`.
+1. **Create the sheet.** Make a new Google Sheet, then create 4 tabs named
+   exactly: `General`, `Lists`, `Evaluation`, `Classes`.
 
 2. **Seed it with the current content.** For each tab: `File > Import >
    Upload`, choose the matching file from [`sheet-template/`](sheet-template),
@@ -74,10 +73,18 @@ No local setup, no command line, no pull requests needed for content changes.
 | `overview.project.team` | ... |
 | `politics.rules` | ... |
 | `politics.ia` | *(rich content — see below)* |
+| `project.details` | *(rich content — see below)* |
+| `exam.details` | *(rich content — see below)* |
+| `grades.details` | *(rich content — see below)* |
 
 Don't rename or remove the `Key` values — the build script looks them up by
 name. Text in any `Value`/`Text` cell can use `**bold**`, `++underline++`,
 `*italic*`, `` `code` ``, and `[link text](https://...)`, same as before.
+
+`project.details`, `exam.details`, and `grades.details` feed the standalone
+"Proyecto Final", "Examen Final", and "Calificaciones" pages, and accept the
+same rich-content line rules as `politics.ia` (see the `Classes` section
+below).
 
 ### `Lists` — one row per bullet point
 
@@ -88,11 +95,9 @@ For fields that are just a bulleted list (`overview.learning`,
 `Text`. To add a bullet, insert a new row with the same `Key`. To remove one,
 delete its row. Order follows row order.
 
-### `Evaluation`, `Grading`, `Resources` — small tables
+### `Evaluation` — small table
 
-Add/remove/edit rows directly; columns match the fields they represent
-(`Percent`/`Label`, `Label`/`Percent`/`Color`, `Label`/`Href`/`Icon`). `Color`
-values are Mantine color strings like `blue.6` or `gray.4`.
+Add/remove/edit rows directly; columns are `Percent`/`Label`.
 
 ### `Classes` — one row per session
 

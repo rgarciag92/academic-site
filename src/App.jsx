@@ -5,8 +5,9 @@ import Overview from './components/sections/Overview';
 import Politics from './components/sections/Politics';
 import ClassList from './components/sections/ClassList';
 import ClassDetail from './components/sections/ClassDetail';
-import Grading from './components/sections/Grading';
-import Resources from './components/sections/Resources';
+import Project from './components/sections/Project';
+import Exam from './components/sections/Exam';
+import Grades from './components/sections/Grades';
 
 export default function App() {
   return (
@@ -19,8 +20,9 @@ export default function App() {
           <Route path="politics" element={<Politics />} />
           <Route path="clases" element={<ClassList />} />
           <Route path="clases/:classId" element={<ClassDetail />} />
-          <Route path="grading" element={<Grading />} />
-          <Route path="resources" element={<Resources />} />
+          <Route path="project" element={<Project />} />
+          <Route path="exam" element={<Exam />} />
+          <Route path="grades" element={<Grades />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
