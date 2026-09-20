@@ -1,0 +1,26 @@
+Key,Text
+overview.learning,**RA1.** Explicar los conceptos fundamentales del Aprendizaje Automático y su relación con la Inteligencia Artificial.
+overview.learning,**RA2.** Analizar y preparar conjuntos de datos estructurados y no estructurados para problemas de Aprendizaje Automático.
+overview.learning,"**RA3.** Aplicar algoritmos básicos e intermedios de Aprendizaje Automático supervisado y no supervisado para resolver problemas de regresión, clasificación, y agrupamiento."
+overview.learning,**RA4.** Evaluar y comparar modelos de Aprendizaje Automático utilizando métricas adecuadas y técnicas de validación.
+overview.learning,"**RA5.** Ajustar hiperparámetros y analizar el impacto del sobreajuste, subajuste, sesgo y varianza en el desempeño de los modelos."
+overview.learning,**RA6.** Implementar flujos completos de trabajo de Aprendizaje Automático utilizando herramientas de programación en Python.
+overview.learning,**RA7.** Analizar implicaciones éticas y sociales del uso de modelos de Aprendizaje Automático.
+overview.structure,Introducción al Aprendizaje Automático.
+overview.structure,Métodos de Aprendizaje Automático Supervisado
+overview.structure,Métodos de Aprendizaje Automático No Supervisado
+overview.structure,Herramientas actuales
+overview.structure,Visualización
+overview.structure,Examen Final y Entrega de Proyectos
+overview.help,Antes de la clase (presencial) o agendar cita a través del correo electrónico (mevilla@up.edu.mx).
+overview.help,"Al solicitar una cita por favor propón uno o varios rangos de horario en los que tengas disponibilidad. La profesora te responderá oportunamente a través del mismo medio de contacto para confirmarte el horario en que te podrá atender."
+politics.activities,"**Entregar las tareas/actividades/etc. puntualmente, NO hay extensiones. ++La inscripción tardía no exime de revisar todo el contenido del curso y entregar las actividades a tiempo (si aplica).++**"
+politics.activities,"No se recibirán tareas/actividades por correo electrónico, a menos que se indique lo contrario. **Deberá ser por los medios indicados.**"
+politics.activities,"Toda las tareas deberán cumplir con los lineamientos de entrega indicados. En caso de no cumplirlos NO serán recibidas (ej. **notebook de Colab, no archivo de Python**)."
+politics.attendance,Es obligatorio atender a todas las sesiones. En caso de alguna situación extraordinaria se deberá platicarlo con la profesora.
+politics.attendance,No se otorgan puntos por asistencia.
+politics.timing,"Ingresar puntualmente a la sesión de clase. **La tolerancia máxima es de 15 minutos, después de esa hora, se cuenta como falta.**"
+politics.integrity,Cualquier tipo de fraude o engaño en cualquier actividad del curso será castigado de acuerdo a las regulaciones de la institución.
+politics.discipline,Se debe tener un respeto total al profesor y a los demás compañeros.
+politics.discipline,"Se pueden utilizar teléfonos, siempre y cuando no interfiera con la clase. **Es responsabilidad del alumno prestar atención a la clase.**"
+politics.discipline,"**++Guardar silencio durante las explicaciones++**, para facilitar el aprendizaje y por respeto a los demás compañeros del curso."

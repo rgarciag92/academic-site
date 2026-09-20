@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+[data-overview-anchor] {
+  scroll-margin-top: 76px;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}

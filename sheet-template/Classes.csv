@@ -1,0 +1,27 @@
+id,number,title,date,objective,material,activity,homework
+tema-1,1,¿Qué es Aprendizaje Automático?,"Viernes 1 de Agosto, 2026","Aprenderás los diferentes tipos de aprendizaje que existen, el proceso de resolución de problemas y la fase de exploración y pre-procesamiento utilizando bibliotecas de Python.","Aquí puedes descargar las presentaciones y archivos de la clase ⬇️
+- [Tema 2.pdf](https://drive.google.com/file/d/1R-EU3H14e0anUthTsWFvIqa7RIuSTuiu/view?usp=drive_link)
+- [Material para la dinamica de clase](https://drive.google.com/file/d/1WSkOYVS62I2W30zsy6HLa66PzjsFAVJ7/view?usp=drive_link)
+- [Google Colab 1](https://colab.research.google.com/drive/1vFyl2R7U9N6MW1tizpb8SDpJ0ROfX8n7?usp=drive_link)
+- [Google Colab 2](https://colab.research.google.com/drive/1ZJDzLIM93dcAfkKIrpJOHWi1rym_PJsp?usp=drive_link)","- Crea una copia del Google Colab y utilízala para resolver la actividad.
+- Cambia el siguiente encabezado por **tus datos.**
+
+```
+# -------------------------------------------------------------
+# Actividad 2
+# Fecha: 7 Agosto 2026
+# Equipo:
+#	Ángela López
+#	Wesley Evers
+# --------------------------------------------------------------
+```
+
+- Sigue las instrucciones que se describen en el notebook.
+- Al finalizar entrega tu actividad en el siguiente [formulario de Google](https://forms.gle/RDBp8dmiADf9B5mn9) en un archivo IPYNB, con el nombre **Actividad2_NombreApellido_Nombre_Apellido.ipynb**
+- **Es necesario iniciar sesión con tu cuenta de correo de la UP.**
+- **Sólo un miembro del equipo necesita subir el archivo.**
+- **Al finalizar se envía un acuse de recibo a tu correo. **
+
+**Fecha límite: Viernes 14 de agosto antes de la clase (6:59 p.m.)**",
+tema-2,2,Conceptos Básicos,"Viernes 7 de Agosto, 2026","Aplicar técnicas de limpieza, transformación y análisis exploratorio de datos como paso previo al entrenamiento de modelos.","- Presentación: Preparación de datos (Colab)
+- Notebook de ejemplo: limpieza y EDA","- Práctica guiada en Colab: limpieza de un dataset con valores faltantes.","- Completar el notebook de limpieza de datos con el dataset asignado."

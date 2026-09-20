@@ -1,0 +1,29 @@
+Key,Value
+professor.name,Miryam Elizabeth
+professor.initials,ME
+professor.email,r.whitfield@example.edu
+course.code,Aprendizaje Automatico
+course.title,Aprendizaje Automático
+course.term,Semestre 2026
+landing.description,"En esta página encontrarás todo el material para tu asignatura. Si te inscribiste tarde, es tu responsabilidad ponerte al día con todo el material del curso (también si faltas o llegas tarde)."
+landing.dates, 31 de agosto al 18 de septiembre 2026
+landing.horarios,7 a 10pm
+landing.ubicacion,Nuevo Rodin Salón 1
+overview.objectives,En esta clase estudiaremos los algoritmos básicos e intermedios del área de Aprendizaje Automático (Machine Learning). Se identificarán diferentes problemas y las técnicas adecuadas para resolverlos desde un punto de vista de análisis de datos.
+overview.software,Los estudiantes necesitarán acceso a una computadora personal con Google Colab(incluido en Google Drive)
+overview.project.resume,"El proyecto final consistirá en la aplicación de una técnica de Machine Learning sobre un conjunto de datos. El proyecto deberá incluir el diseño metodológico del modelo, el proceso de entrenamiento y validación, así como la evaluación de su desempeño mediante métricas adecuadas. Se espera que los estudiantes justifiquen las decisiones tomadas y analicen críticamente los resultados obtenidos."
+overview.project.detail,*<<Más adelante durante el curso se te irán dando las instrucciones.>>*
+overview.project.team,"**Modalidad:** Parejas o equipos de 3 personas."
+politics.rules,Aquí encontrarás el [reglamento general](https://www.up.edu.mx/wp-content/uploads/2024/01/Reglamento_general_Universidad_Panamericana.pdf) de la Universidad Panamericana.
+politics.ia,"El uso de herramientas de inteligencia artificial generativa **está permitido como herramienta de apoyo, pero no como sustituto del aprendizaje, el análisis o la reflexión personal.** El uso de IA es apropiado para tareas como:
+- Generar ideas iniciales o lluvia de ideas.
+- Mejorar la redacción, gramática o claridad de un texto.
+- Explicar conceptos o resolver dudas.
+- Apoyar el desarrollo de código.
+
+Sin embargo, **no es aceptable** entregar como propio **contenido generado íntegramente por IA** cuando la actividad tiene como propósito evaluar el razonamiento, la interpretación, la argumentación, la toma de decisiones o la opinión del estudiante. Esto incluye, entre otros, debates, reflexiones, análisis de casos, conclusiones, respuestas abiertas y cualquier actividad donde se solicite una postura o interpretación personal.
+
+- Si utilizan herramientas de IA generativa en el proceso de elaboración de sus trabajos, se espera que sean **transparentes al respecto.** Pueden indicar cómo la han utilizado (por ejemplo, ""Se utilizó IA para generar ideas iniciales sobre el tema X"" o ""Se empleó IA para revisar la gramática""). Esta transparencia contribuye a un **ambiente de aprendizaje honesto y abierto.**
+- Todo contenido generado por IA que se incorpore en una entrega debe ser **revisado, verificado, adaptado e integrado críticamente** por el estudiante. **La entrega de texto generado por IA sin una contribución intelectual propia**, sin revisión o con modificaciones únicamente superficiales será considerada una falta a la integridad académica.
+- El uso de IA **no exime al estudiante de la responsabilidad sobre su trabajo.** Cada alumno es responsable de la precisión, calidad, originalidad, referencias, funcionamiento del código y veracidad de toda la información presentada, independientemente de las herramientas utilizadas.
+- La profesora podrá realizar preguntas durante la clase o solicitar explicaciones adicionales sobre cualquier entrega para verificar que el estudiante comprende el contenido presentado y que el trabajo refleja su propio aprendizaje."
