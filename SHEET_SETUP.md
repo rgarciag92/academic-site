@@ -96,6 +96,13 @@ values are Mantine color strings like `blue.6` or `gray.4`.
 
 ### `Classes` — one row per session
 
+> **Watch out for the `date` column (and any other text that looks like a
+> date or number).** Google Sheets auto-detects text like `Viernes 1 de
+> Agosto, 2026` as an actual date and silently rewrites it — including
+> recalculating the weekday name, which may not match what you typed. Before
+> typing into the `date` column, select it and set **Format > Number > Plain
+> text** so Sheets leaves your text alone.
+
 Columns: `id`, `number`, `title`, `date`, `objective`, `material`,
 `activity`, `homework`.
 
