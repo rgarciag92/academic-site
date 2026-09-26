@@ -19,6 +19,7 @@ import {
   IconMessage,
   IconVideo,
   IconInfoCircle,
+  IconBookUpload,
 } from '@tabler/icons-react';
 
 // Names usable in the sheet's Sidebar `icon` column (see SHEET_SETUP.md).
@@ -42,6 +43,7 @@ const ICONS = {
   message: IconMessage,
   video: IconVideo,
   info: IconInfoCircle,
+  bookUpload: IconBookUpload
 };
 
 export default function Sidebar({ items, onNavigate }) {
