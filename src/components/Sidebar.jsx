@@ -7,28 +7,54 @@ import {
   IconChecklist,
   IconChartBar,
   IconFolder,
+  IconBook,
+  IconSchool,
+  IconFileText,
+  IconClipboardList,
+  IconCode,
+  IconUsers,
+  IconClock,
+  IconStar,
+  IconLink,
+  IconMessage,
+  IconVideo,
+  IconInfoCircle,
 } from '@tabler/icons-react';
 
-const NAV_ITEMS = [
-  { key: 'landing', label: 'Inicio', icon: IconHome },
-  { key: 'overview', label: 'Información general', icon: IconLayoutDashboard },
-  { key: 'politics', label: 'Políticas del curso', icon: IconCalendarWeek },
-  { key: 'clases', label: 'Clases', icon: IconChecklist },
-  { key: 'project', label: 'Proyecto Final', icon: IconChartBar },
-  { key: 'exam', label: 'Examen Final', icon: IconChartBar },
-  { key: 'grades', label: 'Calificaciones', icon: IconChartBar },
-];
+// Names usable in the sheet's Sidebar `icon` column (see SHEET_SETUP.md).
+// Unknown or blank names fall back to `file`.
+const ICONS = {
+  home: IconHome,
+  dashboard: IconLayoutDashboard,
+  calendar: IconCalendarWeek,
+  checklist: IconChecklist,
+  chart: IconChartBar,
+  folder: IconFolder,
+  book: IconBook,
+  school: IconSchool,
+  file: IconFileText,
+  clipboard: IconClipboardList,
+  code: IconCode,
+  users: IconUsers,
+  clock: IconClock,
+  star: IconStar,
+  link: IconLink,
+  message: IconMessage,
+  video: IconVideo,
+  info: IconInfoCircle,
+};
 
-export default function Sidebar({ onNavigate }) {
+export default function Sidebar({ items, onNavigate }) {
   const { pathname } = useLocation();
 
   return (
     <>
-      {NAV_ITEMS.map(({ key, label, icon: Icon }) => {
-        const to = `/${key}`;
+      {items.map(({ page, label, icon }) => {
+        const to = `/${page}`;
+        const Icon = ICONS[icon] ?? IconFileText;
         return (
           <NavLink
-            key={key}
+            key={page}
             component={Link}
             to={to}
             label={label}

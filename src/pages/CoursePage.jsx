@@ -34,7 +34,7 @@ export default function CoursePage() {
       </AppShell.Header>
 
       <AppShell.Navbar p="sm">
-        <Sidebar onNavigate={close} />
+        <Sidebar items={course.sidebar} onNavigate={close} />
       </AppShell.Navbar>
 
       <AppShell.Main>

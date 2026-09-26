@@ -9,10 +9,17 @@ import { fileURLToPath } from 'node:url';
 import Papa from 'papaparse';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const TABS = ['General', 'Lists', 'Evaluation', 'Classes'];
-const RICH_GENERAL_KEYS = new Set(['politics.ia', 'project.details', 'exam.details', 'grades.details']);
+// Each tab and the header columns it must have. The gviz endpoint silently returns the
+// FIRST tab when the requested name doesn't exist, so the column check is what catches
+// a missing or misnamed tab.
+const TABS = {
+  General: ['Key', 'Value'],
+  Sidebar: ['page', 'label', 'icon'],
+  Pages: ['page', 'content'],
+  Classes: ['id', 'number', 'title', 'date'],
+};
 
-async function loadTab(name, spreadsheetId) {
+async function loadTab(name, requiredColumns, spreadsheetId) {
   let csvText;
   if (process.env.USE_LOCAL_SHEET_TEMPLATE) {
     csvText = fs.readFileSync(path.join(ROOT, 'sheet-template', `${name}.csv`), 'utf8');
@@ -28,20 +35,52 @@ async function loadTab(name, spreadsheetId) {
     csvText = await res.text();
   }
   const parsed = Papa.parse(csvText.trim(), { header: true, skipEmptyLines: true });
+  const columns = parsed.meta.fields ?? [];
+  const missing = requiredColumns.filter((c) => !columns.includes(c));
+  if (missing.length) {
+    throw new Error(
+      `Sheet tab "${name}" is missing column(s): ${missing.join(', ')}. ` +
+        `Make sure a tab named exactly "${name}" exists with those headers in row 1 (see SHEET_SETUP.md).`
+    );
+  }
   return parsed.data;
 }
 
-// One multi-line cell of "rich" content:
-//   blank line       -> ends the current bullet list (just a visual break)
-//   "- text"         -> bullet list item (consecutive ones group into one list)
-//   ``` ... ```      -> a verbatim code block (own lines, not parsed for markup)
-//   anything else    -> a standalone paragraph
-function parseRichBlocks(text) {
+// URL-safe anchor id for a heading, e.g. "Evaluación del Curso" -> "evaluacion-del-curso".
+function slugify(text) {
+  return (
+    text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'seccion'
+  );
+}
+
+// One multi-line cell of "rich" content, one block per line (Markdown-like):
+//   "# text" / "## text" / "### text" -> title / subtitle / minor heading
+//   "- text" or "* text"             -> bullet item (consecutive ones group into one list)
+//   "1. text"                         -> numbered item (consecutive ones group into one list)
+//   "| a | b |"                       -> table row (consecutive ones group into one table)
+//   ``` ... ```                       -> a verbatim code block (own lines, not parsed for markup)
+//   blank line                        -> ends the current list/table (just a visual break)
+//   anything else                     -> a standalone paragraph
+// usedIds is shared across a page's cards so heading anchors stay unique on that page.
+function parseRichBlocks(text, usedIds = new Set()) {
   if (!text || !text.trim()) return undefined;
   const lines = text.replace(/\r\n/g, '\n').split('\n');
   const blocks = [];
-  let currentList = null;
+  let current = null; // the list/table block consecutive lines are appended to
   let codeLines = null;
+
+  const appendTo = (kind, value) => {
+    if (!current || current.kind !== kind) {
+      current = { kind, block: { [kind]: [] } };
+      blocks.push(current.block);
+    }
+    current.block[kind].push(value);
+  };
 
   for (const rawLine of lines) {
     const trimmed = rawLine.trim();
@@ -57,25 +96,49 @@ function parseRichBlocks(text) {
     }
 
     if (trimmed === '') {
-      currentList = null;
+      current = null;
       continue;
     }
     if (trimmed === '```') {
+      current = null;
       codeLines = [];
       continue;
     }
-    if (trimmed.startsWith('- ')) {
-      if (!currentList) {
-        currentList = [];
-        blocks.push({ list: currentList });
-      }
-      currentList.push(trimmed.slice(2).trim());
+
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      current = null;
+      const base = slugify(heading[2].replace(/[*+`]/g, ''));
+      let id = base;
+      for (let n = 2; usedIds.has(id); n++) id = `${base}-${n}`;
+      usedIds.add(id);
+      blocks.push({ heading: heading[2].trim(), level: heading[1].length, id });
       continue;
     }
 
-    currentList = null;
+    const bullet = trimmed.match(/^[-*]\s+(.+)$/);
+    if (bullet) {
+      appendTo('list', bullet[1].trim());
+      continue;
+    }
+
+    const numbered = trimmed.match(/^\d+[.)]\s+(.+)$/);
+    if (numbered) {
+      appendTo('orderedList', numbered[1].trim());
+      continue;
+    }
+
+    if (trimmed.startsWith('|')) {
+      const cells = trimmed.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+      appendTo('table', cells);
+      continue;
+    }
+
+    current = null;
     blocks.push({ paragraph: trimmed });
   }
+
+  if (codeLines !== null) blocks.push({ code: codeLines.join('\n') });
 
   return blocks;
 }
@@ -84,22 +147,37 @@ function buildConfig(tabs) {
   const general = {};
   for (const row of tabs.General) {
     if (!row.Key) continue;
-    const value = RICH_GENERAL_KEYS.has(row.Key) ? parseRichBlocks(row.Value) : (row.Value ?? '').trim();
-    general[row.Key] = value;
+    general[row.Key] = (row.Value ?? '').trim();
   }
   const get = (key, fallback = '') => (general[key] !== undefined ? general[key] : fallback);
 
-  const lists = {};
-  for (const row of tabs.Lists) {
-    if (!row.Key || !row.Text) continue;
-    (lists[row.Key] ??= []).push(row.Text.trim());
+  // Each Pages row is one card; rows with the same `page` stack in sheet order.
+  const pages = {};
+  const pageIds = {};
+  for (const row of tabs.Pages) {
+    const page = (row.page ?? '').trim();
+    if (!page) continue;
+    const blocks = parseRichBlocks(row.content, (pageIds[page] ??= new Set()));
+    if (blocks) (pages[page] ??= []).push(blocks);
   }
 
-  const evaluation = {};
-  for (const row of tabs.Evaluation) {
-    if (!row.Percent) continue;
-    evaluation[Number(row.Percent)] = row.Label.trim();
+  // Sidebar rows, in sheet order. `page` doubles as the URL path, so it must be URL-safe.
+  // `clases` is the built-in class list; every other page needs at least one Pages row.
+  const sidebar = [];
+  for (const row of tabs.Sidebar) {
+    const page = (row.page ?? '').trim();
+    if (!page) continue;
+    if (!/^[a-z0-9-]+$/.test(page)) {
+      throw new Error(
+        `Sidebar page "${page}" must use only lowercase letters, numbers and "-" (it becomes the page URL).`
+      );
+    }
+    if (page !== 'clases' && !pages[page]) {
+      console.warn(`Warning: Sidebar page "${page}" has no rows in the Pages tab, so it will be empty.`);
+    }
+    sidebar.push({ page, label: (row.label ?? '').trim() || page, icon: (row.icon ?? '').trim().toLowerCase() });
   }
+  if (sidebar.length === 0) throw new Error('The Sidebar tab has no rows — add at least one page.');
 
   const classes = tabs.Classes.filter((r) => r.id).map((r) => {
     const entry = {
@@ -126,44 +204,9 @@ function buildConfig(tabs) {
       code: get('course.code'),
       title: get('course.title'),
       term: get('course.term'),
-      landing: {
-        description: get('landing.description'),
-        dates: get('landing.dates'),
-        horarios: get('landing.horarios'),
-        ubicacion: get('landing.ubicacion'),
-      },
-      overview: {
-        objectives: get('overview.objectives'),
-        learning: lists['overview.learning'] ?? [],
-        structure: lists['overview.structure'] ?? [],
-        evaluation,
-        project: {
-          resume: get('overview.project.resume'),
-          detail: get('overview.project.detail'),
-          team: get('overview.project.team'),
-        },
-        help: lists['overview.help'] ?? [],
-        software: get('overview.software'),
-      },
-      politics: {
-        rules: get('politics.rules'),
-        activities: lists['politics.activities'] ?? [],
-        attendance: lists['politics.attendance'] ?? [],
-        timing: lists['politics.timing'] ?? [],
-        integrity: lists['politics.integrity'] ?? [],
-        discipline: lists['politics.discipline'] ?? [],
-        ia: get('politics.ia', []),
-      },
+      sidebar,
+      pages,
       classes,
-      project: {
-        details: get('project.details', []),
-      },
-      exam: {
-        details: get('exam.details', []),
-      },
-      grades: {
-        details: get('grades.details', []),
-      },
     },
   };
 }
@@ -201,8 +244,8 @@ async function main() {
   }
 
   const tabs = {};
-  for (const name of TABS) {
-    tabs[name] = await loadTab(name, spreadsheetId);
+  for (const [name, requiredColumns] of Object.entries(TABS)) {
+    tabs[name] = await loadTab(name, requiredColumns, spreadsheetId);
   }
 
   const site = buildConfig(tabs);
